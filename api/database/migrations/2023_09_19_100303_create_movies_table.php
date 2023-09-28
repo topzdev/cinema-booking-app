@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,8 +21,9 @@ return new class extends Migration
             $table->string('trailer_yt_id')->nullable();
 
             $table->foreignId('rated_type_id')->constrained();
-            $table->foreignId('poster_id')->constrained(table:'photos');
-            $table->foreignId('cover_id')->constrained(table:'photos');
+            $table->foreignId('poster_id')->constrained(table: 'photos');
+            $table->foreignId('cover_id')->constrained(table: 'photos');
+            $table->softDeletes();
         });
     }
 

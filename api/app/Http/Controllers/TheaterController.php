@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Theater;
 use App\Http\Requests\StoreTheaterRequest;
 use App\Http\Requests\UpdateTheaterRequest;
+use Illuminate\Http\Request;
 
 class TheaterController extends Controller
 {
@@ -13,23 +14,23 @@ class TheaterController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Theater::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTheaterRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255',
+            'cinema_id' => 'required|numeric|exists:cinemas,id',
+            'theater_type_id' => 'required|numeric|exists:theater_types,id',
+            'row' => 'required|numeric',
+            'column' => 'required|numeric'
+        ]);
+        return Theater::create($fields);
     }
 
     /**
@@ -37,23 +38,26 @@ class TheaterController extends Controller
      */
     public function show(Theater $theater)
     {
-        //
+        return Theater::with(['cinema', 'theater_type'])->find($theater);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Theater $theater)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTheaterRequest $request, Theater $theater)
     {
-        //
+
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255',
+            'cinema_id' => 'required|numeric|exists:cinemas,id',
+            'theater_type_id' => 'required|numeric|exists:theater_types,id',
+            'row' => 'required|numeric',
+            'column' => 'required|numeric'
+        ]);
+
+        return $theater->update($fields);
     }
 
     /**
@@ -61,6 +65,6 @@ class TheaterController extends Controller
      */
     public function destroy(Theater $theater)
     {
-        //
+        return $theater->delete();
     }
 }

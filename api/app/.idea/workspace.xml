@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="51629c90-1c6c-4738-9906-9b8db05b8cc3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Http/Controllers/CinemaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Http/Controllers/CinemaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/BookingSeats.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/BookingSeats.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Cinema.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Cinema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Movie.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Movie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/ScheduleTime.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ScheduleTime.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/ScreeningSchedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ScreeningSchedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Theater.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Theater.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/TheaterLayout.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/TheaterLayout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/TheaterSeat.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/TheaterSeat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/TheaterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/TheaterType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/migrations/2023_09_19_092835_create_theaters_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../database/migrations/2023_09_19_092835_create_theaters_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/migrations/2023_09_19_095122_create_theater_layouts_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../database/migrations/2023_09_19_095437_create_theater_seats_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../database/migrations/2023_09_19_095437_create_theater_seats_table.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2W1R6RK7HB0AvgyBTVpD2jEk5zz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="51629c90-1c6c-4738-9906-9b8db05b8cc3" name="Changes" comment="" />
+      <created>1695897929192</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695897929192</updated>
+      <workItem from="1695897930981" duration="27000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

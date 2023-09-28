@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cinema;
 use App\Http\Requests\StoreCinemaRequest;
 use App\Http\Requests\UpdateCinemaRequest;
+use Illuminate\Http\Request;
 
 class CinemaController extends Controller
 {
@@ -14,22 +15,22 @@ class CinemaController extends Controller
     public function index()
     {
         //
+        return Cinema::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCinemaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+
+        return Cinema::create($fields);
     }
 
     /**
@@ -37,23 +38,22 @@ class CinemaController extends Controller
      */
     public function show(Cinema $cinema)
     {
-        //
+        return $cinema;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cinema $cinema)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCinemaRequest $request, Cinema $cinema)
+    public function update(Request $request, Cinema $cinema)
     {
-        //
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+
+        return $cinema->update($fields);
     }
 
     /**
@@ -61,6 +61,6 @@ class CinemaController extends Controller
      */
     public function destroy(Cinema $cinema)
     {
-        //
+        return $cinema->delete();
     }
 }
