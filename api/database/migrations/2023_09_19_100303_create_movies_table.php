@@ -16,13 +16,13 @@ return new class extends Migration {
 
             $table->string('title');
             $table->string('tmdb_id');
-            $table->time('duration');
+            $table->integer('runtime');
             $table->string('description')->nullable();
             $table->string('trailer_yt_id')->nullable();
 
-            $table->foreignId('rated_type_id')->constrained();
-            $table->foreignId('poster_id')->constrained(table: 'photos');
-            $table->foreignId('cover_id')->constrained(table: 'photos');
+            $table->foreignId('rated_type_id')->constrained('rated_types');
+            $table->foreignId('poster_id')->constrained(table: 'images');
+            $table->foreignId('cover_id')->constrained(table: 'images');
             $table->softDeletes();
         });
     }

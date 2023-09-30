@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RatedType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,7 +21,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            TheaterTypeSeeder::class
+            TheaterTypeSeeder::class,
+            SeatTypeSeeder::class,
+            RatedTypeSeerder::class,
+            CinemaSeeder::class,
+            TheaterSeeder::class,
+            TheaterSeatSeeder::class,
         ]);
     }
 }

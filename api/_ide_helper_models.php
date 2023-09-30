@@ -20,10 +20,12 @@ namespace App\Models{
  * @property int $theater_id
  * @property int $schedule_time_id
  * @property int $user_id
+ * @property string|null $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|Booking newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Booking newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Booking query()
  * @method static \Illuminate\Database\Eloquent\Builder|Booking whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Booking whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Booking whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Booking whereScheduleTimeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Booking whereTheaterId($value)
@@ -42,11 +44,13 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $booking_id
  * @property int $theater_seat_id
+ * @property string|null $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats query()
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereBookingId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereTheaterSeatId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BookingSeats whereUpdatedAt($value)
@@ -64,12 +68,14 @@ namespace App\Models{
  * @property string $name
  * @property string $address
  * @property string $description
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema query()
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema whereName($value)
@@ -78,6 +84,39 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Cinema withoutTrashed()
  */
 	class Cinema extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Image
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $cld_public_id
+ * @property int $height
+ * @property int $width
+ * @property int $bytes
+ * @property string $url
+ * @property string $secure_url
+ * @property string $format
+ * @property string|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Image query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereBytes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereCldPublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereSecureUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
+ */
+	class Image extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -95,8 +134,9 @@ namespace App\Models{
  * @property int $rated_type_id
  * @property int $poster_id
  * @property int $cover_id
- * @property-read \App\Models\Photo|null $cover
- * @property-read \App\Models\Photo|null $poster
+ * @property string|null $deleted_at
+ * @property-read \App\Models\Image|null $cover
+ * @property-read \App\Models\Image|null $poster
  * @property-read \App\Models\RatedType|null $ratedType
  * @method static \Database\Factories\MovieFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newModelQuery()
@@ -104,6 +144,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Movie query()
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereCoverId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDuration($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereId($value)
@@ -119,48 +160,19 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Photo
- *
- * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $cld_public_id
- * @property int $height
- * @property int $width
- * @property int $bytes
- * @property string $url
- * @property string $secure_url
- * @property string $format
- * @method static \Illuminate\Database\Eloquent\Builder|Photo newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Photo newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Photo query()
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereBytes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereCldPublicId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereFormat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereHeight($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereSecureUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereWidth($value)
- */
-	class Photo extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
  * App\Models\RatedType
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $name
+ * @property string|null $deleted_at
  * @method static \Database\Factories\RatedTypeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType query()
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RatedType whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RatedType whereUpdatedAt($value)
@@ -178,11 +190,13 @@ namespace App\Models{
  * @property string $date
  * @property int $theater_id
  * @property int $movie_id
+ * @property string|null $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule query()
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereMovieId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereTheaterId($value)
@@ -200,10 +214,12 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $time
  * @property int $schedule_id
+ * @property string|null $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime query()
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereScheduleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereTime($value)
@@ -230,14 +246,18 @@ namespace App\Models{
  * App\Models\SeatType
  *
  * @property int $id
+ * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
  * @method static \Database\Factories\SeatTypeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType query()
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SeatType whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SeatType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SeatType whereUpdatedAt($value)
  */
 	class SeatType extends \Eloquent {}
@@ -250,24 +270,34 @@ namespace App\Models{
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string $name
  * @property string $description
- * @property int $theater_type_id
+ * @property int $row
+ * @property int $column
  * @property int $cinema_id
+ * @property int $theater_type_id
  * @property-read \App\Models\Cinema|null $cinema
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TheaterSeat> $theaterSeats
  * @property-read int|null $theater_seats_count
+ * @property-read \App\Models\TheaterType|null $theater_type
  * @method static \Database\Factories\TheaterFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Theater newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Theater newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Theater query()
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereCinemaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater whereColumn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater whereRow($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereTheaterTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Theater whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Theater withoutTrashed()
  */
 	class Theater extends \Eloquent {}
 }
@@ -276,21 +306,9 @@ namespace App\Models{
 /**
  * App\Models\TheaterLayout
  *
- * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $row
- * @property int $column
- * @property int $theater_id
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout query()
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereRow($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereTheaterId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterLayout whereUpdatedAt($value)
  */
 	class TheaterLayout extends \Eloquent {}
 }
@@ -305,18 +323,20 @@ namespace App\Models{
  * @property int $x
  * @property int $y
  * @property string $name
- * @property int $theater_layout_id
+ * @property int $theater_id
  * @property int $seat_type_id
- * @property-read \App\Models\SeatType|null $seatType
+ * @property string|null $deleted_at
+ * @property-read \App\Models\SeatType|null $seat_type
  * @property-read \App\Models\Theater|null $theaters
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat query()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereSeatTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereTheaterLayoutId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereTheaterId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereX($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterSeat whereY($value)
@@ -333,13 +353,14 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $title
  * @property string $description
- * @property int $icon_id
+ * @property string|null $deleted_at
+ * @method static \Database\Factories\TheaterTypeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType query()
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereIconId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TheaterType whereUpdatedAt($value)
@@ -361,6 +382,7 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
@@ -370,6 +392,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)

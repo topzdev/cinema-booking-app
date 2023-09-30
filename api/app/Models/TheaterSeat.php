@@ -25,8 +25,8 @@ class TheaterSeat extends Model
         return $this->belongsTo(Theater::class);
     }
 
-    public function seatType(): HasOne
+    public function seat_type(): HasOne
     {
-        return $this->hasOne(SeatType::class);
+        return $this->hasOne(SeatType::class, 'id', 'seat_type_id');
     }
 }

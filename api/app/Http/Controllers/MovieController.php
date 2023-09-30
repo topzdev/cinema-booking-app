@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\File;
 
 class MovieController extends Controller
 {
@@ -13,39 +15,52 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Movie::with(['cover', 'poster', 'rated_type'])->get();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMovieRequest $request)
+    public function store(Request $request)
     {
-        //
+        $imageUploader = new ImageUploadController();
+
+        $fields = $request->validate([
+            'title' => 'required|string|max:255',
+            'rated_type_id' => 'required|numeric',
+            'poster' => 'required|image|max:2048',
+            'cover' => 'required|image|max:2048',
+            'tmdb_id' => 'required|string',
+            'runtime' => 'required|numeric',
+            'description' => 'string|max:255',
+            'trailer_yt_id' => 'string',
+        ]);
+
+        if (!empty($request->file('poster'))) {
+            $poster = $request->file('poster')->getRealPath();
+            $poster = $imageUploader->upload('poster', $poster);
+            $fields['poster_id'] = $poster->id;
+        }
+
+
+        if (!empty($request->file('cover'))) {
+            $cover = $request->file('cover')->getRealPath();
+            $cover = $imageUploader->upload('cover', $cover);
+            $fields['cover_id'] = $cover->id;
+        }
+
+        unset($fields['poster']);
+        unset($fields['cover']);
+
+        return Movie::create($fields);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie)
+    public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Movie $movie)
-    {
-        //
+        return Movie::with(['cover', 'poster', 'rated_type'])->findOrFail($id);
     }
 
     /**
@@ -53,7 +68,37 @@ class MovieController extends Controller
      */
     public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $imageUploader = new ImageUploadController();
+
+        $fields = $request->validate([
+            'title' => 'required|string|max:255',
+            'rated_type_id' => 'required|numeric',
+            'poster' => 'image|max:2048',
+            'cover' => 'image|max:2048',
+            'tmdb_id' => 'required|string',
+            'runtime' => 'required|numeric',
+            'description' => 'string|max:255',
+            'trailer_yt_id' => 'string',
+        ]);
+
+
+        if (!empty($request->file('poster'))) {
+            $poster = $request->file('poster')->getRealPath();
+            $poster = $imageUploader->upload('poster', $poster, $movie->poster_id);
+            $fields['poster_id'] = $poster->id;
+        }
+
+
+        if (!empty($request->file('cover'))) {
+            $cover = $request->file('cover')->getRealPath();
+            $cover = $imageUploader->upload('cover', $cover, $movie->cover_id);
+            $fields['cover_id'] = $cover->id;
+        }
+
+        unset($fields['poster']);
+        unset($fields['cover']);
+
+        return $movie->update($fields);
     }
 
     /**
@@ -61,6 +106,6 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie)
     {
-        //
+        return $movie->delete();
     }
 }

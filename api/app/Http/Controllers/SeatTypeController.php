@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TheaterType;
+use App\Models\SeatType;
 use Illuminate\Http\Request;
 
-class TheaterTypeController extends Controller
+class SeatTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return TheaterType::all();
+        return SeatType::all();
     }
 }

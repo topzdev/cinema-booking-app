@@ -10,17 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('photos', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('cld_public_id');
+            $table->string('public_id');
             $table->integer('height');
             $table->integer('width');
-            $table->integer('bytes');
+            $table->integer('size');
             $table->string('url');
-            $table->string('secure_url');
-            $table->string('format');
-            $table->softDeletes();
+            $table->string('extension');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('images');
     }
 };
