@@ -19423,6 +19423,141 @@
      
 }
 
+    namespace Mavinoo\Batch { 
+            /**
+     * 
+     *
+     */ 
+        class BatchFacade {
+                    /**
+         * <h2>Update multiple rows.</h2>
+         * 
+         * Example:<br>
+         * ```
+         * $userInstance = new \App\Models\User;
+         * $value = [
+         *     [
+         *         'id' => 1,
+         *         'status' => 'active',
+         *         'nickname' => 'Mohammad'
+         *     ],
+         *     [
+         *         'id' => 5,
+         *         'status' => 'deactive',
+         *         'nickname' => 'Ghanbari'
+         *     ],
+         *     [
+         *         'id' => 7,
+         *         'balance' => ['+', 500]
+         *     ]
+         * ];
+         * $index = 'id';
+         * Batch::update($userInstance, $value, $index);
+         * ```
+         *
+         * @param \Illuminate\Database\Eloquent\Model $table
+         * @param array $values
+         * @param string $index
+         * @param bool $raw
+         * @return bool|int 
+         * @updatedBy Ibrahim Sakr <ebrahimes@gmail.com>
+         * @static 
+         */ 
+        public static function update($table, $values, $index = null, $raw = false)
+        {
+                        /** @var \Mavinoo\Batch\Batch $instance */
+                        return $instance->update($table, $values, $index, $raw);
+        }
+                    /**
+         * Update multiple rows
+         *
+         * @param \Illuminate\Database\Eloquent\Model $table
+         * @param array $values
+         * @param string $index
+         * @param string|null $index2
+         * @param bool $raw
+         * @return bool|int 
+         * @updatedBy Ibrahim Sakr <ebrahimes@gmail.com>
+         * @desc Example
+         * $table = 'users';
+         * $value = [
+         *     [
+         *         'id' => 1,
+         *         'status' => 'active',
+         *         'nickname' => 'Mohammad'
+         *     ] ,
+         *     [
+         *         'id' => 5,
+         *         'status' => 'deactive',
+         *         'nickname' => 'Ghanbari'
+         *     ] ,
+         * ];
+         * $index = 'id';
+         * $index2 = 'user_id';
+         * @static 
+         */ 
+        public static function updateWithTwoIndex($table, $values, $index = null, $index2 = null, $raw = false)
+        {
+                        /** @var \Mavinoo\Batch\Batch $instance */
+                        return $instance->updateWithTwoIndex($table, $values, $index, $index2, $raw);
+        }
+                    /**
+         * Insert Multi rows.
+         *
+         * @param \Illuminate\Database\Eloquent\Model $table
+         * @param array $columns
+         * @param array $values
+         * @param int $batchSize
+         * @param bool $insertIgnore
+         * @return bool|mixed 
+         * @throws \Throwable
+         * @updatedBy Ibrahim Sakr <ebrahimes@gmail.com>
+         * @desc Example
+         * 
+         * $table = 'users';
+         * $columns = [
+         *      'firstName',
+         *      'lastName',
+         *      'email',
+         *      'isActive',
+         *      'status',
+         * ];
+         * $values = [
+         *     [
+         *         'Mohammad',
+         *         'Ghanbari',
+         *         'emailSample_1@gmail.com',
+         *         '1',
+         *         '0',
+         *     ] ,
+         *     [
+         *         'Saeed',
+         *         'Mohammadi',
+         *         'emailSample_2@gmail.com',
+         *         '1',
+         *         '0',
+         *     ] ,
+         *     [
+         *         'Avin',
+         *         'Ghanbari',
+         *         'emailSample_3@gmail.com',
+         *         '1',
+         *         '0',
+         *     ] ,
+         * ];
+         * $batchSize = 500; // insert 500 (default), 100 minimum rows in one query
+         * @static 
+         */ 
+        public static function insert($table, $columns, $values, $batchSize = 500, $insertIgnore = false)
+        {
+                        /** @var \Mavinoo\Batch\Batch $instance */
+                        return $instance->insert($table, $columns, $values, $batchSize, $insertIgnore);
+        }
+         
+    }
+     
+}
+
     namespace Spatie\LaravelIgnition\Facades { 
             /**
      * 
@@ -23858,6 +23993,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Cloudinary extends \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary {}
+            class Batch extends \Mavinoo\Batch\BatchFacade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      
 }

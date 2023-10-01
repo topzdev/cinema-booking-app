@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('size');
             $table->string('url');
             $table->string('extension');
+            $table->string('type');
         });
     }
 

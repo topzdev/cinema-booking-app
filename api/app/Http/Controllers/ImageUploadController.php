@@ -5,20 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use Cloudinary;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Integer;
-use function var_dump;
 
 class ImageUploadController extends Controller
 {
-    public function upload(string $folder, string $file, Integer $oldImageId = null): Image
+    public function upload(string $folder, string $file, int $imageId = null): Image|bool
     {
-
-        if (isset($oldImageId)) {
-            $oldImage = Image::find($oldImageId);
-            Cloudinary::destroy($oldImage->cld_public_id);
-            $oldImage->delete();
-        }
-
         $uploadedImage = Cloudinary::upload($file, [
             "folder" => '/sinefy/' . $folder
         ]);
@@ -30,7 +21,14 @@ class ImageUploadController extends Controller
             'size' => $uploadedImage->getSize(),
             'url' => $uploadedImage->getSecurePath(),
             'extension' => $uploadedImage->getExtension(),
+            'type' => $folder
         ];
+
+        if (isset($imageId)) {
+            $image = Image::findOrFail($imageId);
+            Cloudinary::destroy($image->public_id);
+            return $image->update($fields);
+        }
 
         return Image::create($fields);
     }

@@ -93,25 +93,23 @@ namespace App\Models{
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $cld_public_id
+ * @property string $public_id
  * @property int $height
  * @property int $width
- * @property int $bytes
+ * @property int $size
  * @property string $url
- * @property string $secure_url
- * @property string $format
- * @property string|null $deleted_at
+ * @property string $extension
+ * @property string $type
  * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereBytes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereCldPublicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereExtension($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereSecureUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
@@ -128,7 +126,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $title
  * @property string $tmdb_id
- * @property string $duration
+ * @property int $runtime
  * @property string|null $description
  * @property string|null $trailer_yt_id
  * @property int $rated_type_id
@@ -137,7 +135,7 @@ namespace App\Models{
  * @property string|null $deleted_at
  * @property-read \App\Models\Image|null $cover
  * @property-read \App\Models\Image|null $poster
- * @property-read \App\Models\RatedType|null $ratedType
+ * @property-read \App\Models\RatedType|null $rated_type
  * @method static \Database\Factories\MovieFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newQuery()
@@ -146,10 +144,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Movie whereDuration($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie wherePosterId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereRatedTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Movie whereRuntime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereTmdbId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereTrailerYtId($value)
@@ -191,6 +189,8 @@ namespace App\Models{
  * @property int $theater_id
  * @property int $movie_id
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ScheduleTime> $schedule_time
+ * @property-read int|null $schedule_time_count
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule query()
@@ -226,19 +226,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|ScheduleTime whereUpdatedAt($value)
  */
 	class ScheduleTime extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\ScreeningSchedule
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ScheduleTime> $screeningSchedule
- * @property-read int|null $screening_schedule_count
- * @method static \Illuminate\Database\Eloquent\Builder|ScreeningSchedule newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ScreeningSchedule newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ScreeningSchedule query()
- */
-	class ScreeningSchedule extends \Eloquent {}
 }
 
 namespace App\Models{

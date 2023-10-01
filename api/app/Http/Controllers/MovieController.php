@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Movie;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
@@ -66,15 +67,15 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMovieRequest $request, Movie $movie)
+    public function update(Request $request, Movie $movie)
     {
         $imageUploader = new ImageUploadController();
 
         $fields = $request->validate([
             'title' => 'required|string|max:255',
             'rated_type_id' => 'required|numeric',
-            'poster' => 'image|max:2048',
-            'cover' => 'image|max:2048',
+            'poster' => 'nullable|image|max:2048',
+            'cover' => 'nullable|image|max:2048',
             'tmdb_id' => 'required|string',
             'runtime' => 'required|numeric',
             'description' => 'string|max:255',
@@ -84,15 +85,13 @@ class MovieController extends Controller
 
         if (!empty($request->file('poster'))) {
             $poster = $request->file('poster')->getRealPath();
-            $poster = $imageUploader->upload('poster', $poster, $movie->poster_id);
-            $fields['poster_id'] = $poster->id;
+            $imageUploader->upload('poster', $poster, $movie->poster_id);
         }
 
 
         if (!empty($request->file('cover'))) {
             $cover = $request->file('cover')->getRealPath();
-            $cover = $imageUploader->upload('cover', $cover, $movie->cover_id);
-            $fields['cover_id'] = $cover->id;
+            $imageUploader->upload('cover', $cover, $movie->cover_id);
         }
 
         unset($fields['poster']);

@@ -45,7 +45,7 @@ class TheaterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTheaterRequest $request, Theater $theater)
+    public function update(Request $request, Theater $theater)
     {
 
         $fields = $request->validate([

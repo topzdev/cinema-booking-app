@@ -15,6 +15,7 @@ class Image extends Model
         'width',
         'size',
         'url',
-        'extension'
+        'extension',
+        'type'
     ];
 }

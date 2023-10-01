@@ -11,7 +11,6 @@ class ScheduleTime extends Model
 
     protected $fillable = [
         'time',
-        'screening_schedule_id'
+        'schedule_id'
     ];
-
 }
