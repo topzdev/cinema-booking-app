@@ -7,12 +7,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import React from "react";
+import React, { useEffect } from "react";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getCinemas } from "@/apis/cinema";
+import { useQuery } from "@tanstack/react-query";
+import LinearProgress from "@mui/material/LinearProgress";
+import { PaginationData } from "@/apis";
 type Props = {};
 
 const columns: Column[] = [
@@ -52,66 +56,16 @@ interface Column {
   format?: (value: any) => string;
 }
 
-const rows: CinemaWithAction[] = [
-  {
-    id: 1,
-    created_at: null,
-    updated_at: null,
-    name: "SM San Lazaro",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM San Lazaro Cinema located in manila",
-    deleted_at: null,
-  },
-  {
-    id: 2,
-    created_at: null,
-    updated_at: null,
-    name: "SM Manila",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM Manila Cinema located in manila",
-    deleted_at: null,
-  },
-  {
-    id: 3,
-    created_at: null,
-    updated_at: null,
-    name: "SM San Lazaro",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM San Lazaro Cinema located in manila",
-    deleted_at: null,
-  },
-  {
-    id: 4,
-    created_at: null,
-    updated_at: null,
-    name: "SM Manila",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM Manila Cinema located in manila",
-    deleted_at: null,
-  },
-  {
-    id: 5,
-    created_at: "2023-10-01T09:46:33.000000Z",
-    updated_at: "2023-10-01T09:46:33.000000Z",
-    name: "SM San Lazaro Cinema",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM San Lazaro Cinema located in manila",
-    deleted_at: null,
-  },
-  {
-    id: 6,
-    created_at: "2023-10-01T09:47:13.000000Z",
-    updated_at: "2023-10-01T09:47:13.000000Z",
-    name: "SM San Lazaro Cinema",
-    address: "Felix Huertas Sampaloc Manila",
-    description: "SM San Lazaro Cinema located in manila",
-    deleted_at: null,
-  },
-];
-
 const CinemaTable = (props: Props) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(2);
+
+  const { data, isLoading, isFetching, refetch } = useQuery<
+    PaginationData<Cinema>
+  >({
+    queryKey: ["posts"],
+    queryFn: () => getCinemas({ page: page + 1, per_page: rowsPerPage }),
+  });
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -121,11 +75,16 @@ const CinemaTable = (props: Props) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);
-    setPage(0);
   };
+
+  useEffect(() => {
+    console.log("Refetching...");
+    refetch();
+  }, [page, rowsPerPage]);
 
   return (
     <Paper>
+      {(isLoading || isFetching) && <LinearProgress />}
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -142,9 +101,9 @@ const CinemaTable = (props: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+            {data &&
+              data.data &&
+              data.data.map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
@@ -175,9 +134,9 @@ const CinemaTable = (props: Props) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[2, 5, 10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={(data && data.total) || 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

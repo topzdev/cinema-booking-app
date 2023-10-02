@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import AppHeader from "@/components/layout/AppHeader";
 import AppDrawer, { DRAWER_WIDTH } from "@/components/layout/AppDrawer";
+import ReactQueryProvider from "@/app/ReactQueryProvider";
 
 export const metadata = {
   title: "Next.js App Router + Material UI v5",
@@ -20,18 +21,20 @@ export default function RootLayout({
         <ThemeRegistry>
           <AppHeader />
           <AppDrawer />
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              bgcolor: "background.default",
-              ml: `${DRAWER_WIDTH}px`,
-              mt: ["48px", "56px", "64px"],
-              p: 3,
-            }}
-          >
-            {children}
-          </Box>
+          <ReactQueryProvider>
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                bgcolor: "background.default",
+                ml: `${DRAWER_WIDTH}px`,
+                mt: ["48px", "56px", "64px"],
+                p: 3,
+              }}
+            >
+              {children}
+            </Box>
+          </ReactQueryProvider>
         </ThemeRegistry>
       </body>
     </html>
