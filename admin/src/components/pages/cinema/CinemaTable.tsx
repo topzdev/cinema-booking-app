@@ -1,22 +1,32 @@
 "use client";
+import { PaginationData } from "@/apis";
+import { cinemaAPI } from "@/apis/cinema";
+import { Cinema } from "@/app/cinema/types";
+import { pageRoutes } from "@/configs/pageRoutes";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import React, { useEffect } from "react";
-import dayjs from "dayjs";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { getCinemas } from "@/apis/cinema";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import { useQuery } from "@tanstack/react-query";
-import LinearProgress from "@mui/material/LinearProgress";
-import { PaginationData } from "@/apis";
+import { useDebounce } from "@uidotdev/usehooks";
+import dayjs from "dayjs";
+import { useConfirm } from "material-ui-confirm";
+import Link from "next/link";
+import { useSnackbar } from "notistack";
+import React, { useReducer } from "react";
 type Props = {};
 
 const columns: Column[] = [
@@ -34,16 +44,6 @@ const columns: Column[] = [
   },
 ];
 
-export type Cinema = {
-  id: number;
-  created_at: string | null;
-  updated_at: string | null;
-  name: string;
-  address: string;
-  description: string;
-  deleted_at: null;
-};
-
 type CinemaWithAction = Cinema & {
   action?: any;
 };
@@ -56,35 +56,94 @@ interface Column {
   format?: (value: any) => string;
 }
 
+type Search = {
+  page: 0;
+  q: string;
+  per_page: 10;
+};
+
 const CinemaTable = (props: Props) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(2);
+  const confirm = useConfirm();
+  const { enqueueSnackbar } = useSnackbar();
+  // const [page, setPage] = React.useState(0);
+  // const [search, setSearch] = React.useState("");
+  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [search, setSearch] = useReducer(
+    (prev: any, next: any) => {
+      return { ...prev, ...next };
+    },
+    { page: 0, q: "", per_page: 10 }
+  );
+  const searchParams = useDebounce(
+    [search.q, search.page, search.per_page],
+    300
+  );
 
   const { data, isLoading, isFetching, refetch } = useQuery<
     PaginationData<Cinema>
   >({
-    queryKey: ["posts"],
-    queryFn: () => getCinemas({ page: page + 1, per_page: rowsPerPage }),
+    queryKey: ["posts", ...searchParams],
+    queryFn: () =>
+      cinemaAPI.getCinemas({
+        page: search.page + 1,
+        per_page: search.per_page,
+        q: search.q,
+      }),
+    refetchOnWindowFocus: false,
   });
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    setSearch({ page: newPage });
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(+event.target.value);
+    setSearch({ page: 0, per_page: +event.target.value });
   };
 
-  useEffect(() => {
-    console.log("Refetching...");
-    refetch();
-  }, [page, rowsPerPage]);
+  const handleDelete = async (id: number) => {
+    confirm({
+      title: "Delete Item",
+      description: "Are you sure to delete this item?",
+      confirmationText: "Yes",
+    }).then(async () => {
+      await cinemaAPI.deleteCinema(id.toString());
+      enqueueSnackbar({
+        message: "Cinema Deleted",
+        variant: "success",
+      });
+      await refetch();
+    });
+  };
 
   return (
-    <Paper>
+    <Card>
       {(isLoading || isFetching) && <LinearProgress />}
+
+      <CardContent>
+        <Grid container>
+          <Grid item xs={4}>
+            <TextField
+              fullWidth
+              variant="filled"
+              label="Search"
+              placeholder="Search name, description and address"
+              value={search.q}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={(e) => setSearch({ q: e.target.value })}
+            />
+          </Grid>
+        </Grid>
+      </CardContent>
+
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -109,11 +168,18 @@ const CinemaTable = (props: Props) => {
                     {columns.map((column) => {
                       if (column.id === "action") {
                         return (
-                          <TableCell>
-                            <IconButton aria-label="edit">
+                          <TableCell key={"action"}>
+                            <IconButton
+                              aria-label="edit"
+                              href={pageRoutes.cinema.pages.edit(row.id).href}
+                              LinkComponent={Link}
+                            >
                               <CreateIcon />
                             </IconButton>
-                            <IconButton aria-label="delete">
+                            <IconButton
+                              aria-label="delete"
+                              onClick={() => handleDelete(row.id)}
+                            >
                               <DeleteIcon />
                             </IconButton>
                           </TableCell>
@@ -134,15 +200,15 @@ const CinemaTable = (props: Props) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[2, 5, 10, 25, 100]}
+        rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={(data && data.total) || 0}
-        rowsPerPage={rowsPerPage}
-        page={page}
+        rowsPerPage={search.per_page}
+        page={search.page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Card>
   );
 };
 
