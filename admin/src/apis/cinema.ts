@@ -1,4 +1,4 @@
-import { Cinema, CinemaForm } from "@/app/cinema/types";
+import { Cinema, CinemaForm } from "@/app/(auth)/cinema/types";
 import { PaginationParams, appFetch, objectToQueryString } from "./index";
 
 const getCinemas = (pagination: PaginationParams) => {

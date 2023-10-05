@@ -1,7 +1,7 @@
 "use client";
 
 import { cinemaAPI } from "@/apis/cinema";
-import { Cinema, CinemaForm, cinemaSchema } from "@/app/cinema/types";
+import { Cinema, CinemaForm, cinemaSchema } from "@/app/(auth)/cinema/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Card, CardContent, LinearProgress } from "@mui/material";

@@ -19,12 +19,12 @@ export type PaginationData<T> = {
   total: number;
 };
 
-let apiUrl = "http://127.0.0.1:8000/api";
+export const apiUrl = "http://127.0.0.1:8000/";
 
 export const appFetch = (
   input: RequestInfo | URL,
   init?: RequestInit | undefined
-) => fetch(apiUrl + input, init).then((data) => data.json());
+) => fetch(apiUrl + "/api" + input, init).then((data) => data.json());
 
 export const objectToQueryString = (obj: any) => {
   const queryString = Object.keys(obj)

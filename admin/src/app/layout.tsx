@@ -23,21 +23,7 @@ export default function RootLayout({
         <ThemeRegistry>
           <MuiConfirmProvider>
             <MuiSnackbarProvider>
-              <AppHeader />
-              <AppDrawer />
-              <ReactQueryProvider>
-                <Box
-                  component="main"
-                  sx={{
-                    flexGrow: 1,
-                    bgcolor: "background.default",
-                    ml: `${DRAWER_WIDTH}px`,
-                    mt: ["48px", "56px", "64px"],
-                  }}
-                >
-                  {children}
-                </Box>
-              </ReactQueryProvider>
+              <ReactQueryProvider>{children}</ReactQueryProvider>
             </MuiSnackbarProvider>
           </MuiConfirmProvider>
         </ThemeRegistry>

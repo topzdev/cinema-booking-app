@@ -1,7 +1,7 @@
 "use client";
 import { PaginationData } from "@/apis";
 import { cinemaAPI } from "@/apis/cinema";
-import { Cinema } from "@/app/cinema/types";
+import { Cinema } from "@/app/(auth)/cinema/types";
 import { pageRoutes } from "@/configs/pageRoutes";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";

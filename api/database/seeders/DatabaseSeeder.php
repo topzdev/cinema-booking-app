@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            UserSeeder::class,
             TheaterTypeSeeder::class,
             SeatTypeSeeder::class,
             RatedTypeSeerder::class,

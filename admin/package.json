@@ -23,6 +23,7 @@
     "dayjs": "^1.11.10",
     "material-ui-confirm": "^3.0.9",
     "next": "latest",
+    "next-auth": "4.22.3",
     "notistack": "^3.0.1",
     "react": "latest",
     "react-dom": "latest",
