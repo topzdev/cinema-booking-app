@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -43,4 +44,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $appends = ['full_name', 'initials'];
+
+    public function getFullNameAttribute()
+    {
+        return ucwords("{$this->first_name} {$this->last_name}");
+    }
+
+    public function getInitialsAttribute()
+    {
+        $words = explode(' ', $this->getFullNameAttribute());
+
+        // Initialize an empty string to store initials
+        $initials = '';
+
+        // Loop through each word and take the first letter
+        foreach ($words as $word) {
+            $initials .= strtoupper(substr($word, 0, 1)); // Convert to uppercase
+        }
+
+        return $initials;
+    }
 }

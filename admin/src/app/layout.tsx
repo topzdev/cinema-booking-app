@@ -1,11 +1,9 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import AppHeader from "@/components/layout/AppHeader";
-import AppDrawer, { DRAWER_WIDTH } from "@/components/layout/AppDrawer";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import MuiSnackbarProvider from "@/components/providers/SnackbarProvider";
 import MuiConfirmProvider from "@/components/providers/MUIConfirmProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export const metadata = {
   title: "Next.js App Router + Material UI v5",
@@ -23,7 +21,9 @@ export default function RootLayout({
         <ThemeRegistry>
           <MuiConfirmProvider>
             <MuiSnackbarProvider>
-              <ReactQueryProvider>{children}</ReactQueryProvider>
+              <ReactQueryProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </ReactQueryProvider>
             </MuiSnackbarProvider>
           </MuiConfirmProvider>
         </ThemeRegistry>

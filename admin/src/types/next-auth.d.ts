@@ -1,9 +1,9 @@
-import { JWT, Session, User } from "next-auth";
-
-type User = {
+export type AuthUser = {
   id: number;
   first_name: string;
   last_name: string;
+  full_name: string;
+  initials: string;
   phone: string | null;
   email: string;
   email_verified_at: string | null;
@@ -13,14 +13,13 @@ type User = {
 };
 
 declare module "next-auth" {
+  interface User extends AuthUser {
+    access_token: string;
+  }
   interface Session {
     accessToken: string;
-    user: {
-      id: string;
-      accessToken: string;
-    } & Session["user"];
+    user: User;
   }
-  type User = User;
   interface JWT {
     access_token: string;
   }

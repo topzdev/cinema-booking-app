@@ -1,5 +1,6 @@
-import AppDrawer, { DRAWER_WIDTH } from "@/components/layout/AppDrawer";
+import AppDrawer from "@/components/layout/AppDrawer";
 import AppHeader from "@/components/layout/AppHeader";
+import { DRAWER_WIDTH } from "@/configs";
 import Box from "@mui/material/Box";
 import * as React from "react";
 

@@ -11,6 +11,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 type Props = {};
 
 export const loginSchema = yup.object({
@@ -22,12 +25,13 @@ export type LoginForm = yup.InferType<typeof loginSchema>;
 
 const LoginForm = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const { control, handleSubmit, formState } = useForm<LoginForm>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "christian@email.com",
+      password: "lugod",
     },
   });
 
@@ -36,11 +40,28 @@ const LoginForm = (props: Props) => {
 
     await handleSubmit(async (data) => {
       try {
-        enqueueSnackbar({
-          message: "Welcome to Sinefy Admin Dashboard",
-          variant: "success",
+        const res = await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
         });
+
+        console.log(res);
+
+        if (res?.error) {
+          enqueueSnackbar({
+            message: res.error,
+            variant: "error",
+          });
+        } else {
+          router.replace("/");
+          enqueueSnackbar({
+            message: "Welcome to Sinefy Admin Dashboard",
+            variant: "success",
+          });
+        }
       } catch (error) {
+        console.error(error);
         enqueueSnackbar({
           message: "Something went wrong",
           variant: "error",
