@@ -1,3 +1,8 @@
+import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
+import TheaterApi from "./TheaterApi";
+import CinemaApi from "./CinemaApi";
+
 export type PaginationParams = {
   page: number;
   per_page: number;
@@ -21,14 +26,39 @@ export type PaginationData<T> = {
 
 export const apiUrl = "http://127.0.0.1:8000";
 
-export const appFetch = (
-  input: RequestInfo | URL,
-  init?: RequestInit | undefined
-) => fetch(apiUrl + "/api" + input, { ...init, credentials: "include" });
+let session: any,
+  token: any = null;
 
-export const objectToQueryString = (obj: any) => {
-  const queryString = Object.keys(obj)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
-    .join("&");
-  return queryString;
+export const appFetch = async (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined,
+  method?: string
+) => {
+  if (!session) {
+    console.log("Fetching again...");
+    session = await getSession();
+  }
+  token = session?.user ? session.access_token : null;
+
+  return fetch(apiUrl + "/api" + input, {
+    ...init,
+    method,
+    credentials: "include",
+    headers: {
+      ...init?.headers,
+      Accept: "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  })
+    .then((res) => res.json())
+    .catch((error) => {
+      throw error;
+    });
 };
+
+const apiServices = {
+  theater: new TheaterApi("theater", appFetch),
+  cinema: new CinemaApi("cinema", appFetch),
+};
+
+export default apiServices;

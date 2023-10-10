@@ -1,6 +1,6 @@
 "use client";
 import apiServices, { PaginationData } from "@/apis";
-import { Cinema } from "@/app/(auth)/cinema/types";
+import { Theater } from "@/app/(auth)/theater/types";
 import { pageRoutes } from "@/configs/pageRoutes";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -43,12 +43,12 @@ const columns: Column[] = [
   },
 ];
 
-type CinemaWithAction = Cinema & {
+type TheaterWithAction = Theater & {
   action?: any;
 };
 
 interface Column {
-  id: keyof CinemaWithAction;
+  id: keyof TheaterWithAction;
   label: string;
   minWidth?: number;
   align?: "right";
@@ -61,7 +61,7 @@ type Search = {
   per_page: 10;
 };
 
-const CinemaTable = (props: Props) => {
+const TheaterTable = (props: Props) => {
   const confirm = useConfirm();
   const { enqueueSnackbar } = useSnackbar();
   // const [page, setPage] = React.useState(0);
@@ -80,11 +80,11 @@ const CinemaTable = (props: Props) => {
   );
 
   const { data, isLoading, isFetching, refetch } = useQuery<
-    PaginationData<Cinema>
+    PaginationData<Theater>
   >({
     queryKey: ["posts", ...searchParams],
     queryFn: () =>
-      apiServices.cinema.getCinemas({
+      apiServices.theater.getTheaters({
         page: search.page + 1,
         per_page: search.per_page,
         q: search.q,
@@ -108,9 +108,9 @@ const CinemaTable = (props: Props) => {
       description: "Are you sure to delete this item?",
       confirmationText: "Yes",
     }).then(async () => {
-      await apiServices.cinema.deleteCinema(id.toString());
+      await apiServices.theater.deleteTheater(id.toString());
       enqueueSnackbar({
-        message: "Cinema Deleted",
+        message: "Theater Deleted",
         variant: "success",
       });
       await refetch();
@@ -170,7 +170,7 @@ const CinemaTable = (props: Props) => {
                           <TableCell key={"action"}>
                             <IconButton
                               aria-label="edit"
-                              href={pageRoutes.cinema.pages.edit(row.id).href}
+                              href={pageRoutes.theater.pages.edit(row.id).href}
                               LinkComponent={Link}
                             >
                               <CreateIcon />
@@ -211,4 +211,4 @@ const CinemaTable = (props: Props) => {
   );
 };
 
-export default CinemaTable;
+export default TheaterTable;

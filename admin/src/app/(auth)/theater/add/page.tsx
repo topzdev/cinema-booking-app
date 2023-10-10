@@ -1,4 +1,4 @@
-import CinemaAddForm from "@/components/pages/cinema/CinemaAddForm";
+import TheaterAddForm from "@/components/pages/theater/TheaterAddForm";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
@@ -10,11 +10,11 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <>
-      <AppPageBar title="Add Cinema"></AppPageBar>
+      <AppPageBar title="Add Theater"></AppPageBar>
       <Container>
         <Grid container>
           <Grid mt={3} xs={12}>
-            <CinemaAddForm />
+            <TheaterAddForm />
           </Grid>
         </Grid>
       </Container>

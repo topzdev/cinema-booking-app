@@ -1,7 +1,7 @@
 "use client";
 
 import AppPageBar from "@/components/layout/AppPageBar";
-import CinemaEditForm from "@/components/pages/cinema/CinemaEditForm";
+import TheaterEditForm from "@/components/pages/theater/TheaterEditForm";
 import { pageRoutes } from "@/configs/pageRoutes";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -27,20 +27,20 @@ const page = (props: Props) => {
       description: "Are you sure to delete this item?",
       confirmationText: "Yes",
     }).then(async () => {
-      await apiServices.cinema.deleteCinema(id);
+      await apiServices.theater.deleteTheater(id);
       enqueueSnackbar({
-        message: "Cinema Deleted",
+        message: "Theater Deleted",
         variant: "success",
       });
 
-      router.push(pageRoutes.cinema.href);
+      router.push(pageRoutes.theater.href);
     });
   };
 
   return (
     <>
       <AppPageBar
-        title="Edit Cinema"
+        title="Edit Theater"
         action={
           <IconButton
             size="large"
@@ -53,7 +53,7 @@ const page = (props: Props) => {
       <Container>
         <Grid container>
           <Grid mt={3} xs={12}>
-            <CinemaEditForm />
+            <TheaterEditForm />
           </Grid>
         </Grid>
       </Container>

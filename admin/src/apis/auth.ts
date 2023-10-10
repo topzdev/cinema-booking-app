@@ -9,11 +9,7 @@ const login = (credentials: LoginForm) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  })
-    .then((res) => res.json())
-    .catch((error) => {
-      throw error;
-    });
+  });
 };
 
 const getCSRFCookie = () => {
@@ -22,9 +18,29 @@ const getCSRFCookie = () => {
   });
 };
 
+const logout = () => {
+  return appFetch(`/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+const user = () => {
+  return appFetch(`/auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 const authAPI = {
   login,
   getCSRFCookie,
+  logout,
+  user,
 };
 
 export default authAPI;

@@ -1,57 +1,45 @@
 "use client";
 
-import { Cinema, CinemaForm, cinemaSchema } from "@/app/(auth)/cinema/types";
+import apiServices from "@/apis";
+import { TheaterForm, theaterSchema } from "@/app/(auth)/theater/types";
+import { pageRoutes } from "@/configs/pageRoutes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Card, CardContent, LinearProgress } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Unstable_Grid2";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useSnackbar } from "notistack";
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { cinemaDefaultValues } from "./CinemaAddForm";
-import { useQuery } from "@tanstack/react-query";
-import { pageRoutes } from "@/configs/pageRoutes";
-import apiServices from "@/apis";
 
 type Props = {};
 
-const CinemaEditForm = (props: Props) => {
+export const theaterDefaultValues = {
+  address: "",
+  description: "",
+  name: "",
+};
+
+const TheaterAddForm = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-  const params = useParams();
 
-  const { control, handleSubmit, formState, reset } = useForm<CinemaForm>({
-    resolver: yupResolver(cinemaSchema),
-    defaultValues: cinemaDefaultValues,
+  const { control, handleSubmit, formState } = useForm<TheaterForm>({
+    resolver: yupResolver(theaterSchema),
+    defaultValues: theaterDefaultValues,
   });
-
-  const { data, isLoading, isFetching, status } = useQuery<Cinema>({
-    queryKey: ["updateCinema"],
-    queryFn: () => apiServices.cinema.getOneCinema(params.id as string),
-    refetchOnWindowFocus: false,
-  });
-
-  useEffect(() => {
-    if (status === "success") {
-      reset(data);
-    }
-  }, [status, data]);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     await handleSubmit(async (data) => {
+      console.log(data);
       try {
-        const response = await apiServices.cinema.updateCinema(
-          params.id as string,
-          data
-        );
+        const response = await apiServices.theater.addTheater(data);
         console.log(response);
         enqueueSnackbar({
-          message: "Cinema Updated",
+          message: "Theater Added",
           variant: "success",
           action: () => (
             <Button
@@ -59,13 +47,14 @@ const CinemaEditForm = (props: Props) => {
               variant="contained"
               disableElevation
               LinkComponent={Link}
-              href={pageRoutes.cinema.href}
+              href={pageRoutes.theater.pages.edit(response.id).href}
             >
-              View List
+              View
             </Button>
           ),
         });
       } catch (error) {
+        console.error(error);
         enqueueSnackbar({
           message: "Something went wrong",
           variant: "error",
@@ -79,7 +68,6 @@ const CinemaEditForm = (props: Props) => {
   return (
     <form onSubmit={onSubmit}>
       <Card variant="outlined">
-        {(isLoading || isFetching) && <LinearProgress />}
         <CardContent>
           <Grid rowGap={2} container>
             <Grid xs={12}>
@@ -88,7 +76,7 @@ const CinemaEditForm = (props: Props) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <TextField
-                    label="Cinema Name"
+                    label="Theater Name"
                     {...field}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
@@ -150,4 +138,4 @@ const CinemaEditForm = (props: Props) => {
   );
 };
 
-export default CinemaEditForm;
+export default TheaterAddForm;
