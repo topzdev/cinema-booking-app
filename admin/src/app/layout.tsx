@@ -3,7 +3,8 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ReactQueryProvider from "@/components/providers/ReactQueryProvider";
 import MuiSnackbarProvider from "@/components/providers/SnackbarProvider";
 import MuiConfirmProvider from "@/components/providers/MUIConfirmProvider";
-import { AuthProvider } from "@/components/providers/AuthProvider";
+import AuthProvider from "@/components/providers/AuthProvider";
+import ReduxProvider from "@/components/providers/ReduxProvider";
 
 export const metadata = {
   title: {
@@ -24,7 +25,9 @@ export default function RootLayout({
           <MuiConfirmProvider>
             <MuiSnackbarProvider>
               <ReactQueryProvider>
-                <AuthProvider>{children}</AuthProvider>
+                <AuthProvider>
+                  <ReduxProvider>{children}</ReduxProvider>
+                </AuthProvider>
               </ReactQueryProvider>
             </MuiSnackbarProvider>
           </MuiConfirmProvider>
