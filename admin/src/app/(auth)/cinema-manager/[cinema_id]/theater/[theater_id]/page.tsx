@@ -44,7 +44,7 @@ const page = (props: Props) => {
         action={
           <IconButton
             size="large"
-            onClick={() => handleDelete(params.id as string)}
+            onClick={() => handleDelete(params.theater_id as string)}
           >
             <DeleteIcon />
           </IconButton>

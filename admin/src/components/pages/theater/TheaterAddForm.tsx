@@ -2,24 +2,27 @@
 
 import apiServices from "@/apis";
 import { TheaterForm, theaterSchema } from "@/app/(auth)/theater/types";
+import { ControlledTextfield } from "@/components/ui/Textfield";
 import { pageRoutes } from "@/configs/pageRoutes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Card, CardContent } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Unstable_Grid2";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { FormEvent } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 type Props = {};
 
 export const theaterDefaultValues = {
-  address: "",
   description: "",
   name: "",
+  row: 0,
+  column: 0,
 };
 
 const TheaterAddForm = (props: Props) => {
@@ -69,55 +72,44 @@ const TheaterAddForm = (props: Props) => {
     <form onSubmit={onSubmit}>
       <Card variant="outlined">
         <CardContent>
-          <Grid rowGap={2} container>
+          <Grid container spacing={2}>
             <Grid xs={12}>
-              <Controller
+              <ControlledTextfield
+                control={control}
                 name="name"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    label="Theater Name"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
+                label="Theater Name"
               />
             </Grid>
             <Grid xs={12}>
-              <Controller
-                name="address"
+              <ControlledTextfield
                 control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    label="Address"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
-              />
-            </Grid>
-            <Grid xs={12}>
-              <Controller
                 name="description"
+                multiline
+                minRows={5}
+                label="Description"
+              />
+            </Grid>
+
+            <Grid xs={12}>
+              <Typography variant="body1">Cinema Layout</Typography>
+            </Grid>
+
+            <Grid xs={6}>
+              <ControlledTextfield
+                type="text"
                 control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    multiline
-                    minRows={5}
-                    label="Description"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
+                name="row"
+                label="Row"
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              />
+            </Grid>
+            <Grid xs={6}>
+              <ControlledTextfield
+                type="text"
+                control={control}
+                name="column"
+                label="Column"
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               />
             </Grid>
             <Grid display={"flex"} justifyContent={"flex-end"} xs={12}>

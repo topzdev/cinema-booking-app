@@ -1,6 +1,6 @@
 export const pageRoutes = {
   cinema: (() => {
-    const path = "/cinema";
+    const path = "/cinema-manager";
 
     return {
       href: path,

@@ -1,7 +1,8 @@
 "use client";
 import apiServices, { PaginationData } from "@/apis";
-import { Theater } from "@/app/(auth)/theater/types";
 import { pageRoutes } from "@/configs/pageRoutes";
+import Theater from "@/models/Theater";
+import TheaterType from "@/models/Theater";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
@@ -28,10 +29,15 @@ import { useSnackbar } from "notistack";
 import React, { useReducer } from "react";
 type Props = {};
 
+type TheaterWithAction = Theater & {
+  action?: any;
+  layout?: any;
+};
+
 const columns: Column[] = [
   { id: "name", label: "Name" },
   { id: "description", label: "Description" },
-  { id: "address", label: "Address" },
+  { id: "layout", label: "Layout" },
   {
     id: "created_at",
     label: "Created at",
@@ -42,10 +48,6 @@ const columns: Column[] = [
     label: "Action",
   },
 ];
-
-type TheaterWithAction = Theater & {
-  action?: any;
-};
 
 interface Column {
   id: keyof TheaterWithAction;
@@ -183,9 +185,15 @@ const TheaterTable = (props: Props) => {
                             </IconButton>
                           </TableCell>
                         );
+                      } else if (column.id === "layout") {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {row.row} x {row.column}
+                          </TableCell>
+                        );
                       }
 
-                      const value = row[column.id];
+                      const value = row[column.id] as any;
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format ? column.format(value) : value}

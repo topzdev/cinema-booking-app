@@ -1,7 +1,8 @@
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import TheaterApi from "./TheaterApi";
-import CinemaApi from "./CinemaApi";
+import TheaterServices from "./TheaterServices";
+import CinemaServices from "./CinemaServices";
+import AuthenticatiionServices from "./AutheticationServices";
 
 export type PaginationParams = {
   page: number;
@@ -35,7 +36,6 @@ export const appFetch = async (
   method?: string
 ) => {
   if (!session) {
-    console.log("Fetching again...");
     session = await getSession();
   }
   token = session?.user ? session.access_token : null;
@@ -57,8 +57,9 @@ export const appFetch = async (
 };
 
 const apiServices = {
-  theater: new TheaterApi("theater", appFetch),
-  cinema: new CinemaApi("cinema", appFetch),
+  theater: new TheaterServices("theater", appFetch),
+  cinema: new CinemaServices("cinema", appFetch),
+  auth: new AuthenticatiionServices("auth", appFetch),
 };
 
 export default apiServices;

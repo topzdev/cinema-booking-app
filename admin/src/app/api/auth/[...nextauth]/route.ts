@@ -1,8 +1,8 @@
-import authAPI from "@/apis/auth";
 import { LoginForm } from "@/components/pages/login/LoginForm";
 import { AuthOptions } from "next-auth/core/types";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import apiServices from "@/apis";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -11,15 +11,14 @@ export const authOptions: AuthOptions = {
       credentials: {},
 
       async authorize(credentials: any) {
-        await authAPI.getCSRFCookie();
+        await apiServices.auth.getCSRFCookie();
 
         const data = {
           email: credentials?.email,
           password: credentials?.password,
         };
 
-        const response = await authAPI.login(data);
-
+        const response = await apiServices.auth.login(data);
         console.log(response);
 
         if (response.errors) {
@@ -48,8 +47,8 @@ export const authOptions: AuthOptions = {
   },
 
   events: {
-    signOut: async () => {
-      return await authAPI.logout();
+    signOut: () => {
+      return apiServices.auth.logout();
     },
   },
 

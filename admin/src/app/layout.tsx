@@ -6,8 +6,10 @@ import MuiConfirmProvider from "@/components/providers/MUIConfirmProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export const metadata = {
-  title: "Next.js App Router + Material UI v5",
-  description: "Next.js App Router + Material UI v5",
+  title: {
+    template: "%s | Sinefy Admin",
+    default: "Sinefy Admin",
+  },
 };
 
 export default function RootLayout({

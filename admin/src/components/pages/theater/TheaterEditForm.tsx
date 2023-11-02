@@ -20,6 +20,7 @@ import { theaterDefaultValues } from "./TheaterAddForm";
 import { useQuery } from "@tanstack/react-query";
 import { pageRoutes } from "@/configs/pageRoutes";
 import apiServices from "@/apis";
+import { ControlledTextfield } from "@/components/ui/Textfield";
 
 type Props = {};
 
@@ -87,53 +88,20 @@ const TheaterEditForm = (props: Props) => {
         <CardContent>
           <Grid rowGap={2} container>
             <Grid xs={12}>
-              <Controller
+              <ControlledTextfield
+                control={control}
                 name="name"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    label="Theater Name"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
+                label="Theater Name"
               />
             </Grid>
+
             <Grid xs={12}>
-              <Controller
-                name="address"
+              <ControlledTextfield
                 control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    label="Address"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
-              />
-            </Grid>
-            <Grid xs={12}>
-              <Controller
                 name="description"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    multiline
-                    minRows={5}
-                    label="Description"
-                    {...field}
-                    error={!!fieldState.error}
-                    helperText={fieldState.error?.message}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
+                multiline
+                minRows={5}
+                label="Description"
               />
             </Grid>
             <Grid display={"flex"} justifyContent={"flex-end"} xs={12}>
