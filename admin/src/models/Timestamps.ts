@@ -1,6 +1,6 @@
 type Timestamps = {
   created_at: null | string;
-  updated_at: string;
+  updated_at: null | string;
   deleted_at: null | string;
 };
 

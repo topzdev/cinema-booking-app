@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import React, { FormEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Image from "next/image";
@@ -86,7 +86,7 @@ const LoginForm = (props: Props) => {
             Sinefy Admin, Please enter your credentials
           </Typography>
           <Grid rowGap={2} mt={5} container>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Controller
                 name="email"
                 control={control}
@@ -102,7 +102,7 @@ const LoginForm = (props: Props) => {
                 )}
               />
             </Grid>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Controller
                 name="password"
                 control={control}
@@ -119,7 +119,7 @@ const LoginForm = (props: Props) => {
                 )}
               />
             </Grid>{" "}
-            <Grid display={"flex"} justifyContent={"flex-end"} xs={12}>
+            <Grid item display={"flex"} justifyContent={"flex-end"} xs={12}>
               <LoadingButton
                 loading={isSubmitting}
                 className="ml-auto"

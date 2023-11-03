@@ -1,9 +1,9 @@
-import { RootState, useAppSelector } from "@/store";
-import AppPageBar from "@/components/layout/AppPageBar";
-import Container from "@mui/material/Container";
+import CinemaInfoPreview from "@/components/pages/cinema/CinemaInfoPreview";
+import CinemaManagerPageBar from "@/components/pages/cinema/CinemaManagerPageBar";
+import CinemaTheaterList from "@/components/pages/cinema/CinemaTheaterList";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Metadata } from "next";
-import { useSelector } from "react-redux";
 
 type Props = {};
 
@@ -12,18 +12,19 @@ export const metadata: Metadata = {
 };
 
 function page({}: Props) {
-  // const count = useAppSelector((state) => state.counter.value);
-
   return (
     <>
-      <AppPageBar title="Sm Manila"></AppPageBar>
-      <Container>
-        <Grid container>
-          <Grid mt={3} xs={12}>
-            {/* {count} */}
+      <CinemaManagerPageBar />
+      <Box p={3}>
+        <Grid container spacing={3}>
+          <Grid xs={5}>
+            <CinemaInfoPreview />
+          </Grid>
+          <Grid xs={7}>
+            <CinemaTheaterList />
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     </>
   );
 }

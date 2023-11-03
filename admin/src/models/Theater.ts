@@ -10,7 +10,7 @@ type Theater = {
   column: number;
   cinema_id: number;
   theater_type_id: number;
-  cinema?: Cinema;
+  cinema?: Cinema | null;
   theater_type: TheaterType;
 } & Timestamps;
 

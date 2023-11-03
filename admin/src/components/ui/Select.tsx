@@ -14,21 +14,36 @@ import MenuItem from "@mui/material/MenuItem";
 type Props = {
   variant?: TextFieldVariants;
   helperText?: TextFieldProps["helperText"];
+  items: Record<string, any>[] | [];
+  itemText?: string;
+  itemValue?: string;
 } & Omit<SelectProps, "variant">;
 
-export const Select = (props: Props) => {
+export const Select = ({ items, itemText, itemValue, ...props }: Props) => {
+  const menuItems = items
+    ? items.map((item) => {
+        if (typeof item === "object" && itemValue && itemText)
+          return {
+            value: item[itemValue],
+            text: item[itemText],
+          };
+
+        return {
+          value: item,
+          text: item,
+        };
+      })
+    : [];
+
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl fullWidth>
       <InputLabel id="demo-simple-select-helper-label">
         {props.label}
       </InputLabel>
       <MuiSelect {...props}>
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {menuItems.map((item) => (
+          <MenuItem value={item.value}>{item.text}</MenuItem>
+        ))}
       </MuiSelect>
       {props.helperText && <FormHelperText>{props.helperText}</FormHelperText>}
     </FormControl>

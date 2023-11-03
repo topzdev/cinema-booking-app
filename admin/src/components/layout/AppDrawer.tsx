@@ -23,11 +23,16 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import React from "react";
 import Typography from "@mui/material/Typography";
+import { pageRoutes } from "@/configs/pageRoutes";
 type Props = {};
 
 const LINKS = [
   { text: "Dashboard", href: "/", icon: HomeIcon },
-  { text: "Cinema", href: "/cinema", icon: CameraIndoorIcon },
+  {
+    text: "Cinema",
+    href: pageRoutes.cinemaManager.href,
+    icon: CameraIndoorIcon,
+  },
   { text: "Theater", href: "/theater", icon: TheatersIcon },
   { text: "Movie", href: "/movie", icon: MovieIcon },
 ];

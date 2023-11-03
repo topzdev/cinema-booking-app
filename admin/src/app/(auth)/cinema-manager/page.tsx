@@ -21,7 +21,7 @@ const IndexPage = (props: Props) => {
             size="large"
             variant="contained"
             LinkComponent={Link}
-            href={pageRoutes.cinema.pages.add.href}
+            href={pageRoutes.cinemaManager.pages.add.href}
           >
             Add Cinema
           </Button>

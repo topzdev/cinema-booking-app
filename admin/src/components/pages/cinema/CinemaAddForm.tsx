@@ -1,7 +1,7 @@
 "use client";
 
 import apiServices from "@/apis";
-import { CinemaForm, cinemaSchema } from "@/app/(auth)/cinema/types";
+import { CinemaForm, cinemaSchema } from "@/app/(auth)/cinema-manager/types";
 import { pageRoutes } from "@/configs/pageRoutes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -47,7 +47,7 @@ const CinemaAddForm = (props: Props) => {
               variant="contained"
               disableElevation
               LinkComponent={Link}
-              href={pageRoutes.cinema.pages.edit(response.id).href}
+              href={pageRoutes.cinemaManager.pages.edit(response.id).href}
             >
               View
             </Button>

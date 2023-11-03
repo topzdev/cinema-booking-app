@@ -1,16 +1,15 @@
 "use client";
 
 import {
-  Theater,
   TheaterForm,
   theaterSchema,
-} from "@/app/(auth)/theater/types";
+} from "@/app/(auth)/cinema-manager/[cinema_id]/theater/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Card, CardContent, LinearProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSnackbar } from "notistack";
@@ -21,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { pageRoutes } from "@/configs/pageRoutes";
 import apiServices from "@/apis";
 import { ControlledTextfield } from "@/components/ui/Textfield";
+import Theater from "@/models/Theater";
 
 type Props = {};
 
@@ -33,7 +33,7 @@ const TheaterEditForm = (props: Props) => {
     defaultValues: theaterDefaultValues,
   });
 
-  const { data, isLoading, isFetching, status } = useQuery<Theater>({
+  const { data, isLoading, isFetching, status } = useQuery<TheaterForm>({
     queryKey: ["updateTheater"],
     queryFn: () => apiServices.theater.getOneTheater(params.id as string),
     refetchOnWindowFocus: false,
@@ -87,7 +87,7 @@ const TheaterEditForm = (props: Props) => {
         {(isLoading || isFetching) && <LinearProgress />}
         <CardContent>
           <Grid rowGap={2} container>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <ControlledTextfield
                 control={control}
                 name="name"
@@ -95,7 +95,7 @@ const TheaterEditForm = (props: Props) => {
               />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <ControlledTextfield
                 control={control}
                 name="description"
@@ -104,7 +104,7 @@ const TheaterEditForm = (props: Props) => {
                 label="Description"
               />
             </Grid>
-            <Grid display={"flex"} justifyContent={"flex-end"} xs={12}>
+            <Grid item display={"flex"} justifyContent={"flex-end"} xs={12}>
               <LoadingButton
                 loading={isSubmitting}
                 className="ml-auto"

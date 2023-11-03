@@ -1,7 +1,10 @@
 "use client";
 
 import apiServices from "@/apis";
-import { TheaterForm, theaterSchema } from "@/app/(auth)/theater/types";
+import {
+  TheaterForm,
+  theaterSchema,
+} from "@/app/(auth)/cinema-manager/[cinema_id]/theater/types";
 import { ControlledTextfield } from "@/components/ui/Textfield";
 import { pageRoutes } from "@/configs/pageRoutes";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { FormEvent } from "react";
@@ -73,14 +76,14 @@ const TheaterAddForm = (props: Props) => {
       <Card variant="outlined">
         <CardContent>
           <Grid container spacing={2}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <ControlledTextfield
                 control={control}
                 name="name"
                 label="Theater Name"
               />
             </Grid>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <ControlledTextfield
                 control={control}
                 name="description"
@@ -90,11 +93,11 @@ const TheaterAddForm = (props: Props) => {
               />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Typography variant="body1">Cinema Layout</Typography>
             </Grid>
 
-            <Grid xs={6}>
+            <Grid item xs={6}>
               <ControlledTextfield
                 type="text"
                 control={control}
@@ -103,7 +106,7 @@ const TheaterAddForm = (props: Props) => {
                 inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               />
             </Grid>
-            <Grid xs={6}>
+            <Grid item xs={6}>
               <ControlledTextfield
                 type="text"
                 control={control}
@@ -112,7 +115,7 @@ const TheaterAddForm = (props: Props) => {
                 inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               />
             </Grid>
-            <Grid display={"flex"} justifyContent={"flex-end"} xs={12}>
+            <Grid item display={"flex"} justifyContent={"flex-end"} xs={12}>
               <LoadingButton
                 loading={isSubmitting}
                 className="ml-auto"

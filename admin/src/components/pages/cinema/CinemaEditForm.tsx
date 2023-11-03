@@ -1,6 +1,10 @@
 "use client";
 
-import { Cinema, CinemaForm, cinemaSchema } from "@/app/(auth)/cinema/types";
+import {
+  Cinema,
+  CinemaForm,
+  cinemaSchema,
+} from "@/app/(auth)/cinema-manager/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Card, CardContent, LinearProgress } from "@mui/material";
@@ -30,7 +34,7 @@ const CinemaEditForm = (props: Props) => {
 
   const { data, isLoading, isFetching, status } = useQuery<Cinema>({
     queryKey: ["updateCinema"],
-    queryFn: () => apiServices.cinema.getOneCinema(params.id as string),
+    queryFn: () => apiServices.cinema.getOneCinema(params.cinema_id as string),
     refetchOnWindowFocus: false,
   });
 
@@ -46,7 +50,7 @@ const CinemaEditForm = (props: Props) => {
     await handleSubmit(async (data) => {
       try {
         const response = await apiServices.cinema.updateCinema(
-          params.id as string,
+          params.cinema_id as string,
           data
         );
         console.log(response);
@@ -59,7 +63,7 @@ const CinemaEditForm = (props: Props) => {
               variant="contained"
               disableElevation
               LinkComponent={Link}
-              href={pageRoutes.cinema.href}
+              href={pageRoutes.cinemaManager.href}
             >
               View List
             </Button>
