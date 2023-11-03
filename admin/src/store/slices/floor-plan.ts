@@ -61,6 +61,6 @@ export const selectTheatherInfo = (state: RootState) =>
   state.floorPlan.theater_info;
 
 export const selectSeatSelectedText = (state: RootState) =>
-  `Selected 86 ${state.floorPlan.seats.length} seats`;
+  `Selected ${state.floorPlan.seats.length} seats`;
 
 export default floorPlanSlice.reducer;

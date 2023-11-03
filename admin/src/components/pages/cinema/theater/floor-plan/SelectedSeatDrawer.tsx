@@ -13,6 +13,7 @@ import { FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { SeatInfoForm, seatInfoSchema } from "./type";
 import Box from "@mui/material/Box";
+import { seatTypeItems } from "@/configs/selectItems";
 
 type Props = {};
 
@@ -50,6 +51,7 @@ const SelectedSeatDrawer = (props: Props) => {
   return (
     <Drawer
       sx={{
+        maxWidth: 400,
         width: 400,
       }}
       open={true}
@@ -57,7 +59,7 @@ const SelectedSeatDrawer = (props: Props) => {
       anchor="right"
     >
       <Toolbar />
-      <Box>
+      <Box width={400}>
         <CardHeader title="A1 - Set Info"></CardHeader>
         <CardContent>
           <form onSubmit={onSubmit}>
@@ -75,6 +77,9 @@ const SelectedSeatDrawer = (props: Props) => {
                   control={control}
                   name="seat_type"
                   label="Seat Type"
+                  itemText="title"
+                  itemValue="id"
+                  items={seatTypeItems}
                 />
               </Grid>
 
@@ -89,6 +94,7 @@ const SelectedSeatDrawer = (props: Props) => {
           </form>
         </CardContent>
       </Box>
+      <Toolbar />
     </Drawer>
   );
 };
